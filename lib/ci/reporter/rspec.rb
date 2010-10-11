@@ -13,6 +13,8 @@ rescue LoadError
     tried_gem = true
     require 'rubygems'
     gem 'rspec'
+    require 'rspec/core/formatters/base_formatter'
+    require 'rspec/core/formatters/progress_formatter'
     retry
   end
 end
