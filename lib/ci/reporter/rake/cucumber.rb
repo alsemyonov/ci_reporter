@@ -4,13 +4,14 @@
 
 namespace :ci do
   namespace :setup do
+    @reports_dir = ENV["CI_REPORTS"] || "features/reports"
+
     task :cucumber_report_cleanup do
-      rm_rf ENV["CI_REPORTS"] || "features/reports"
+      rm_rf @reports_dir
     end
 
     task :cucumber => :cucumber_report_cleanup do
-      spec_opts = ["--require", "#{File.dirname(__FILE__)}/cucumber_loader.rb",
-        "--format", "CI::Reporter::Cucumber"].join(" ")
+      spec_opts = ['--format', 'junit', '--out', @reports_dir].join(" ")
       ENV["CUCUMBER_OPTS"] = "#{ENV['CUCUMBER_OPTS']} #{spec_opts}"
     end
   end
